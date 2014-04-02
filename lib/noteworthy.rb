@@ -98,7 +98,7 @@ module Noteworthy
       
       @issues = []
       @entries = []
-
+      link = formatter.link
       gitlog.each do |commit|
         commit_message = commit.message
         commit_date = "[#{commit.date.iso8601}]"
@@ -117,7 +117,7 @@ module Noteworthy
         sha = commit.sha
         longsha = sha
         sha = sha[0..6] unless long_hash
-        link = formatter.link
+        
         if github_link_commit && github_repo
           sha = "[#{link[:text_b]}#{sha}#{link[:text_a]}#{link[:link_b]}#{github_repo}/commit/#{longsha}#{link[:link_a]}]"
         else
