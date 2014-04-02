@@ -52,7 +52,7 @@ module Noteworthy
         @issues.push(commit_message.match(Noteworthy::Patterns.jira)[0])
         
         if jira_inst
-          commit_message = commit_message.sub(Noteworthy::Patterns.jira, "[#{link[:text_b]}\1#{link[:text_a]}#{link[:link_b]}#{jira_inst}/browse/\1#{link[:link_b]}]")
+          commit_message = commit_message.sub(Noteworthy::Patterns.jira, "[#{link[:text_b]}"+'\1'+"#{link[:text_a]}#{link[:link_b]}#{jira_inst}/browse/"+'\1'+"#{link[:link_a]}]")
         else
           commit_message = commit_message.sub(Noteworthy::Patterns.jira, '[\1]')
         end
@@ -60,7 +60,7 @@ module Noteworthy
       
       if commit_message =~ Noteworthy::Patterns.github
         if github_repo
-          commit_message = commit_message.sub(Noteworthy::Patterns.github, "[#{link[:text_b]}\#\1#{link[:text_a]}#{link[:link_b]}#{github_repo}/issues/\1#{link[:link_a]}]")
+          commit_message = commit_message.sub(Noteworthy::Patterns.github, "[#{link[:text_b]}\#"+'\1'+"#{link[:text_a]}#{link[:link_b]}#{github_repo}/issues/"+'\1'+"#{link[:link_a]}]")
         else
           commit_message = commit_message.sub(Noteworthy::Patterns.github, '[#\1]')
         end
