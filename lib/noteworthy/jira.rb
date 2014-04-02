@@ -20,7 +20,12 @@ module Noteworthy
     def get_issue(key=nil)
       return false if key.nil?
       return false unless self.configured?
-      return Jiralicious::Issue.find(key)
+      begin
+        return Jiralicious::Issue.find(key)
+      rescue
+        return false
+      end
+      return false
     end
     
     def configured?
