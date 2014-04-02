@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Noteworthy::VERSION
   spec.authors       = ["Jan Lindblom"]
   spec.email         = ["jan.lindblom@mittmedia.se"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Short summary.}
+  spec.description   = %q{Longer description.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency 'rdoc'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rubygems-tasks'
+  spec.add_dependency "git"
+  spec.add_dependency "rake"
 end

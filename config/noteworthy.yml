@@ -1,0 +1,7 @@
+jira: ""
+author_email: true
+link_commit: true
+long_hash: false
+show_author: true
+show_date: false
+format: "markdown"
