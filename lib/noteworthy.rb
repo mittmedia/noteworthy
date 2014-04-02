@@ -2,6 +2,7 @@ require "noteworthy/version"
 require "noteworthy/config"
 require "noteworthy/formatter"
 require "noteworthy/patterns"
+require "noteworthy/jira"
 require "git"
 require 'rake'
 require 'rake/tasklib'
@@ -135,7 +136,13 @@ module Noteworthy
         
       end
       
+      jira_client = Noteworthy::Jira.new
+      jira_client.configure(config) if config['connect_jira']
+      
       @issues.each do |i|
+        key = i.sub(Noteworthy::Patterns.jira, '\1')
+        issue = jira_client.get_issue(key)
+        
         puts "\n#{formatter.h4} #{i.sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}"
         @entries.each do |e|
           puts e[:string] if e[:tagged] == i
