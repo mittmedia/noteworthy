@@ -153,7 +153,7 @@ module Noteworthy
           type = "#{issue.fields.fields_current['issuetype']['name']} "
         end
         unless parent.nil?
-          puts "\n#{formatter.h4} #{parent.fields.fields_current['issuetype']['name']} #{issue.fields.fields_current['parent']['key'].sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}#{parent.fields.fields_current['summary']}"
+          puts "\n#{formatter.h4} #{parent.fields.fields_current['issuetype']['name']} #{issue.fields.fields_current['parent']['key'].sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}: #{parent.fields.fields_current['summary']}"
           puts "\n#{formatter.h5} #{type}#{i.sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}#{summary}"
         else
           puts "\n#{formatter.h4} #{type}#{i.sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}#{summary}"
