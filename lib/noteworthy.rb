@@ -50,7 +50,7 @@ module Noteworthy
       link = formatter.link
       
       if commit_message =~ Noteworthy::Patterns.jira
-        @issues.push(commit_message.match(Noteworthy::Patterns.jira)[0])
+        @issues.push(commit_message.match(Noteworthy::Patterns.jira)[0]) unless @issues.include?(commit_message.match(Noteworthy::Patterns.jira)[0])
         
         if jira_inst
           commit_message = commit_message.sub(Noteworthy::Patterns.jira, "[#{link[:text_b]}"+'\1'+"#{link[:text_a]}#{link[:link_b]}#{jira_inst}/browse/"+'\1'+"#{link[:link_a]}]")
@@ -142,11 +142,22 @@ module Noteworthy
       @issues.each do |i|
         key = i.sub(Noteworthy::Patterns.jira, '\1')
         issue = jira_client.get_issue(key)
-        summary = ''
-        if issue
-          summary = issue.fields.fields_current['summary']
+        parent = nil
+        if issue and issue.fields.fields_current.has_key?('parent')
+          parent = jira_client.get_issue(issue.fields.fields_current['parent']['key'])
         end
-        puts "\n#{formatter.h4} #{i.sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])} #{summary}"
+        summary = ''
+        type = ''
+        if issue
+          summary = ": #{issue.fields.fields_current['summary']}"
+          type = "#{issue.fields.fields_current['issuetype']['name']} "
+        end
+        unless parent.nil?
+          puts "\n#{formatter.h4} #{parent.fields.fields_current['issuetype']['name']} #{issue.fields.fields_current['parent']['key'].sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}#{parent.fields.fields_current['summary']}"
+          puts "\n#{formatter.h5} #{type}#{i.sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}#{summary}"
+        else
+          puts "\n#{formatter.h4} #{type}#{i.sub(Noteworthy::Patterns.jira, link[:text_b]+'\1'+link[:text_a]+link[:link_b]+jira_inst+'/browse/\1'+link[:link_a])}#{summary}"
+        end
         @entries.each do |e|
           puts e[:string] if e[:tagged] == i
         end
