@@ -1,0 +1,4 @@
+--format doc
+--color
+--format RspecJunitFormatter
+--out reports/rspec.xml
