@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'rspec_junit_formatter'
   spec.add_dependency "git"
-  spec.add_dependency "rake"
+  spec.add_dependency 'rake', '>= 0'
 end
