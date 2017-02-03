@@ -1,6 +1,6 @@
 # Noteworthy
 
-TODO: Write a gem description
+Generates releasenotes from git log with Jira Issue keys
 
 ## Installation
 
